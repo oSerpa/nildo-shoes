@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { supabase, normalizar, SELECT_PRODUTO } from '../lib/supabase'
 import { precoFinal, linkWhatsAppLoja } from '../lib/format'
 import { LOJA } from '../config'
@@ -13,7 +14,11 @@ export default function Vitrine() {
   const [produtos, setProdutos] = useState([])
   const [estado, setEstado] = useState('carregando')
   const [filtro, setFiltro] = useState({ cat: 'Todas', tam: '', marca: '', preco: '' })
-  const [aberto, setAberto] = useState(null)
+  const { id } = useParams()
+  const navigate = useNavigate()
+  // o produto aberto vem da URL (/p/:id), assim cada anúncio tem um link próprio
+  const aberto = useMemo(() => (id ? produtos.find((p) => p.id === id) ?? null : null), [id, produtos])
+  const setAberto = useCallback((p) => navigate(p ? `/p/${p.id}` : '/', { replace: !!id }), [navigate, id])
 
   useEffect(() => {
     supabase.from('produtos').select(SELECT_PRODUTO).eq('ativo', true).order('criado_em', { ascending: false })
@@ -23,6 +28,11 @@ export default function Vitrine() {
         setEstado('ok')
       })
   }, [])
+
+  useEffect(() => {
+    if (estado === 'ok' && id && !aberto) navigate('/', { replace: true }) // link de anúncio pausado ou excluído
+    document.title = aberto ? `${aberto.nome} | ${LOJA.nome}` : LOJA.nome
+  }, [estado, id, aberto, navigate])
 
   const lista = useMemo(() => {
     const [min, max] = filtro.preco ? filtro.preco.split('-').map(Number) : [0, Infinity]
@@ -34,7 +44,7 @@ export default function Vitrine() {
   }, [produtos, filtro])
 
   const promos = useMemo(() => produtos.filter((p) => p.preco_promocional != null), [produtos])
-  const fechar = useCallback(() => setAberto(null), [])
+  const fechar = useCallback(() => navigate('/'), [navigate])
 
   return (
     <>

@@ -4,9 +4,11 @@ import { brl, faixaNumeracao } from '../lib/format'
 import { BUCKET_FOTOS } from '../config'
 import Logo from '../components/Logo'
 import FormAnuncio from './FormAnuncio'
+import Compartilhar from './Compartilhar'
 
 const I = {
   edit: <svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4Z" /><path d="m13.5 6.5 4 4" /></svg>,
+  share: <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.5" /><circle cx="6" cy="12" r="2.5" /><circle cx="18" cy="19" r="2.5" /><path d="m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4" /></svg>,
   del: <svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" /></svg>,
 }
 
@@ -19,8 +21,10 @@ export default function Painel({ email }) {
   const [confirmando, setConfirmando] = useState(null)
   const [editando, setEditando] = useState(null) // null fechado, {} novo, produto = editar
   const [toast, setToast] = useState('')
+  const [compartilhando, setCompartilhando] = useState(null)
   const [erro, setErro] = useState('')
 
+  const fecharCompartilhar = useCallback(() => setCompartilhando(null), [])
   const avisar = (t) => { setToast(t); setTimeout(() => setToast(''), 2600) }
 
   const carregar = useCallback(async () => {
@@ -91,7 +95,8 @@ export default function Painel({ email }) {
               <div className="info"><strong>{i.nome}</strong><small>{i.marca} · {i.categoria} · {faixaNumeracao(i.tamanhos)}</small></div>
               <div className="precos">{i.preco_promocional != null ? <><s>{brl(i.preco)}</s><span className="promo">{brl(i.preco_promocional)}</span></> : brl(i.preco)}</div>
               <div className="acoes">
-                <button className={`status ${i.ativo ? 'on' : 'off'}`} type="button" onClick={() => alternar(i)}>{i.ativo ? 'No ar' : 'Pausado'}</button>
+                <button className={`status ${i.ativo ? 'st-on' : 'st-off'}`} type="button" onClick={() => alternar(i)}>{i.ativo ? 'No ar' : 'Pausado'}</button>
+                <button className="ico" type="button" aria-label={`Compartilhar ${i.nome}`} title="Compartilhar" onClick={() => setCompartilhando(i)}>{I.share}</button>
                 <button className="ico" type="button" aria-label={`Editar ${i.nome}`} onClick={() => setEditando(i)}>{I.edit}</button>
                 <button className="ico" type="button" aria-label={`Excluir ${i.nome}`} onClick={() => setConfirmando(i.id)}>{I.del}</button>
               </div>
@@ -109,6 +114,7 @@ export default function Painel({ email }) {
           onFechar={() => setEditando(null)}
           onSalvo={(novo) => { setEditando(null); carregar(); avisar(novo ? 'Anúncio publicado' : 'Alterações salvas') }} />
       )}
+      {compartilhando && <Compartilhar p={compartilhando} onFechar={fecharCompartilhar} avisar={avisar} />}
       {toast && <div className="toast" role="status">{toast}</div>}
     </>
   )

@@ -10,6 +10,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Vitrine />} />
+        <Route path="/p/:id" element={<Vitrine />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="*" element={<Vitrine />} />
       </Routes>
