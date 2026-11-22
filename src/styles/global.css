@@ -1,0 +1,35 @@
+/* Identidade Nildo Shoes: bordô de couro, etiqueta mostarda, Barlow Condensed + Instrument Sans */
+:root{
+  --bg:#F1F0EE; --surface:#FFFFFF; --ink:#1D1B1A; --muted:#6B6562; --line:#E1DEDA;
+  --brand:#6A1E2A; --brand-deep:#4E1520; --on-brand:#F6ECE9; --on-brand-muted:#D2B3B0;
+  --tag:#E2A62C; --tag-ink:#2B1B04; --photo:#E7E4E0;
+  --ok:#1E7F4C; --ok-soft:#E3F1E9; --warn:#8A5A00; --warn-soft:#F7EBD2; --danger:#B3261E; --zap:#1E7F4C; --zap-ink:#FFFFFF;
+  --f-display:"Barlow Condensed","Arial Narrow",sans-serif; --f-body:"Instrument Sans",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141213; --surface:#1C191A; --ink:#F1ECEA; --muted:#A79F9C; --line:#2E2A2A;
+  --brand:#4A1520; --brand-deep:#350E16; --on-brand:#F6ECE9; --on-brand-muted:#C79E9C;
+  --tag:#E8B04A; --tag-ink:#231603; --photo:#262223;
+  --ok:#4CC383; --ok-soft:#173022; --warn:#E8B04A; --warn-soft:#33270F; --danger:#F2726A; --zap:#24965A; --zap-ink:#04130A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141213; --surface:#1C191A; --ink:#F1ECEA; --muted:#A79F9C; --line:#2E2A2A;
+  --brand:#4A1520; --brand-deep:#350E16; --on-brand:#F6ECE9; --on-brand-muted:#C79E9C;
+  --tag:#E8B04A; --tag-ink:#231603; --photo:#262223;
+  --ok:#4CC383; --ok-soft:#173022; --warn:#E8B04A; --warn-soft:#33270F; --danger:#F2726A; --zap:#24965A; --zap-ink:#04130A; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+img{max-width:100%}
+[hidden]{display:none!important}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--tag);outline-offset:2px}
+.logo{display:flex;align-items:baseline;gap:10px;color:var(--ink);text-decoration:none}
+.logo b{font-family:var(--f-display);font-weight:700;font-size:2rem;line-height:1;letter-spacing:.01em;text-transform:uppercase}
+.logo b span{color:var(--brand)}
+.logo i{font-style:normal;font-family:var(--f-display);font-weight:500;font-size:.8rem;letter-spacing:.42em;text-transform:uppercase;color:var(--muted);padding-left:10px;border-left:1px solid var(--line)}
+.lnk{background:none;border:0;cursor:pointer;font-size:.85rem;color:var(--muted);text-decoration:underline;text-underline-offset:3px;padding:4px 0}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));translate:-50% 0;background:var(--ink);color:var(--surface);padding:10px 16px;border-radius:6px;font-size:.9rem;z-index:40}
+@media (max-width:640px){.logo b{font-size:1.6rem}.logo i{font-size:.66rem;letter-spacing:.32em;padding-left:8px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
