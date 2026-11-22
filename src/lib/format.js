@@ -9,8 +9,8 @@ export const faixaNumeracao = (t) => (t.length ? `Do ${t[0]} ao ${t[t.length - 1
 export function linkWhatsApp(p, numero) {
   const preco = `${brl(precoFinal(p))}${p.preco_promocional ? ' (promoção)' : ''}`
   const texto = numero
-    ? `Olá, ${LOJA.nome}! Tenho interesse no ${p.nome} (${p.marca}), número ${numero}, ${preco}. Ainda tem disponível?`
-    : `Olá, ${LOJA.nome}! Tenho interesse no ${p.nome} (${p.marca}), ${preco}. Quais numerações vocês têm?`
+    ? `Olá, ${LOJA.nome}! Tenho interesse neste modelo: ${p.nome} (${p.marca}), número ${numero}, ${preco}. Ainda tem disponível?`
+    : `Olá, ${LOJA.nome}! Tenho interesse neste modelo: ${p.nome} (${p.marca}), ${preco}. Quais numerações vocês têm?`
   return `https://wa.me/${LOJA.whatsapp}?text=${encodeURIComponent(texto)}`
 }
 
