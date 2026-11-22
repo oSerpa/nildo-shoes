@@ -12,7 +12,7 @@
 .btn.perigo{background:var(--danger);color:#fff}
 .adm label{display:grid;gap:6px;font-size:.82rem;font-weight:600}
 .adm input[type=text],.adm input[type=email],.adm input[type=password],.adm input[type=number],.adm select,.adm textarea{width:100%;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:10px 12px;font-weight:400;font-size:.95rem}
-.adm input:focus,.adm select:focus,.adm textarea:focus{outline:none;border-color:var(--brand)}
+.adm input:focus,.adm select:focus,.adm textarea:focus{outline:none;border-color:var(--brand-text)}
 .adm textarea{resize:vertical;min-height:96px}
 .dica{font-weight:400;color:var(--muted);font-size:.78rem}
 .erro{color:var(--danger);font-size:.85rem;margin:0}
@@ -48,8 +48,7 @@
 .info small{color:var(--muted);font-size:.8rem}
 .precos{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .precos s{display:block;color:var(--muted);font-weight:400;font-size:.8rem}
-.precos .promo{color:var(--brand)}
-:root:not([data-theme="light"]) .precos .promo{color:inherit}
+.precos .promo{color:var(--brand-text)}
 .acoes{display:flex;align-items:center;gap:6px}
 .status{border:0;border-radius:999px;padding:4px 10px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap}
 .status.on{background:var(--ok-soft);color:var(--ok)}
@@ -76,7 +75,7 @@
 .foto .ctl{position:absolute;inset:auto 4px 4px 4px;display:flex;justify-content:space-between}
 .foto .ctl button{width:26px;height:26px;border-radius:50%;border:0;background:var(--surface);cursor:pointer;font-size:.8rem;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 .add{aspect-ratio:1;border:1.5px dashed var(--line);border-radius:6px;display:grid;place-items:center;text-align:center;color:var(--muted);font-size:.8rem;font-weight:500;cursor:pointer;padding:6px}
-.add:hover{border-color:var(--brand);color:var(--brand)}
+.add:hover{border-color:var(--brand-text);color:var(--brand-text)}
 .add input{position:absolute;width:1px;height:1px;opacity:0}
 .nnums{display:flex;flex-wrap:wrap;gap:6px}
 .nnum{width:46px;height:40px;border:1px solid var(--line);border-radius:4px;background:var(--surface);cursor:pointer;font-family:var(--f-display);font-weight:600;font-size:1.05rem}
