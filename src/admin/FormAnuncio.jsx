@@ -136,7 +136,8 @@ export default function FormAnuncio({ item, categorias, marcas, onFechar, onSalv
             <label htmlFor="g-marca">Marca<input type="text" id="g-marca" list="g-marcas" value={marca} onChange={(e) => setMarca(e.target.value)} placeholder="Escolha ou digite" maxLength={60} />
               <datalist id="g-marcas">{marcas.map((m) => <option key={m.id} value={m.nome} />)}</datalist></label>
             <label htmlFor="g-cat">Categoria<select id="g-cat" value={categoriaId} onChange={(e) => setCategoriaId(e.target.value)}>
-              <option value="">Escolha</option>{categorias.map((c) => <option key={c.id} value={c.id}>{c.nome}</option>)}</select></label>
+              <option value="">{categorias.length ? 'Escolha' : 'Nenhuma categoria cadastrada'}</option>{categorias.map((c) => <option key={c.id} value={c.id}>{c.nome}</option>)}</select>
+              {!categorias.length && <span className="dica">Cadastre as categorias no Supabase (tabela categorias) e atualize a página.</span>}</label>
           </div>
           <div className="dupla">
             <label htmlFor="g-preco">Preço (R$)<input type="number" id="g-preco" min="0" step="0.01" inputMode="decimal" value={preco} onChange={(e) => setPreco(e.target.value)} /></label>

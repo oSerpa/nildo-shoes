@@ -100,7 +100,9 @@ create policy "admin gerencia marcas" on public.marcas
 -- Bucket das fotos: leitura pública, escrita só de admin, até 5 MB, só imagem
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values ('fotos-produtos', 'fotos-produtos', true, 5242880,
-        array['image/jpeg','image/png','image/webp']);
+        array['image/jpeg','image/png','image/webp'])
+on conflict (id) do update set public = true, file_size_limit = excluded.file_size_limit,
+  allowed_mime_types = excluded.allowed_mime_types;
 
 create policy "admin envia fotos" on storage.objects
   for insert to authenticated with check (bucket_id = 'fotos-produtos' and public.is_admin());
@@ -109,9 +111,16 @@ create policy "admin altera fotos" on storage.objects
 create policy "admin apaga fotos" on storage.objects
   for delete to authenticated using (bucket_id = 'fotos-produtos' and public.is_admin());
 
+-- Libera as tabelas pro site (projetos novos do Supabase vêm sem isso). O RLS continua valendo.
+grant usage on schema public to anon, authenticated;
+grant select on public.produtos, public.categorias, public.marcas to anon, authenticated;
+grant insert, update, delete on public.produtos, public.categorias, public.marcas to authenticated;
+grant usage, select on all sequences in schema public to authenticated;
+
 -- Dados iniciais pra testar os filtros
 insert into public.categorias (nome) values
-  ('Tênis'), ('Sapatênis'), ('Social'), ('Bota'), ('Sandália'), ('Chinelo');
+  ('Tênis'), ('Sapatênis'), ('Social'), ('Bota'), ('Sandália'), ('Chinelo')
+on conflict (nome) do nothing;
 
 -- DEPOIS de rodar este arquivo:
 -- 1. Authentication > Sign In / Providers > Email: desligar "Allow new users to sign up".
