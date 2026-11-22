@@ -29,7 +29,14 @@ export default function Painel({ email }) {
       supabase.from('categorias').select('id, nome').order('nome'),
       supabase.from('marcas').select('id, nome').order('nome'),
     ])
-    if (p.error || c.error || m.error) { setErro('Não foi possível carregar os anúncios. Atualize a página.'); return }
+    const falha = p.error || c.error || m.error
+    if (falha) {
+      console.error(falha)
+      setErro(falha.code === '42501'
+        ? 'O banco recusou a leitura (permissão). Rode o arquivo supabase/schema.sql atualizado no SQL Editor.'
+        : `Não foi possível carregar os anúncios: ${falha.message}`)
+      return
+    }
     setItens(p.data.map(normalizar)); setCategorias(c.data); setMarcas(m.data); setErro('')
   }, [])
 
